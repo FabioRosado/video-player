@@ -5,7 +5,7 @@ const Icon = (props) => {
 
     return(
         <svg width={width} height={height} viewBox={ICONS[icon].viewBox}>
-            <path d={ICONS[icon].path} transform={ICONS[icon].transform} fill="#46beaf" />
+            <path id={icon} d={ICONS[icon].path} transform={ICONS[icon].transform} fill="#46beaf" />
         </svg>
     )
 }
