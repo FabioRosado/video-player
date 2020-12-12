@@ -1,0 +1,22 @@
+.video-player {
+    width: 50vw;
+}
+
+@media(max-width: 1200px) {
+    .video-player {
+        width: 70vw;
+    }
+}
+
+.video-controls {
+    background-color: var(--dark-blue);
+    margin-top: -10px;
+    display: flex;
+    padding: 1rem;
+}
+
+.player-button {
+    background-color: var(--dark-blue);
+    border-style: none;
+    cursor: pointer;
+}

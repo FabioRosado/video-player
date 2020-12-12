@@ -1,3 +1,15 @@
+:root {
+  --light-blue: #349adc;
+  --blue: #111b32;
+  --dark-blue: #0A0F1C;
+  --green: #46beaf;
+  --gray: #46beaf;
+}
+
+.relative {
+  position: relative;
+}
+
 .App {
   text-align: center;
 }
@@ -14,7 +26,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--blue);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +47,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.pattern {
+    position: absolute;
+    left: -22vw;
+    top: 20vh;
+    width: 600px;
 }
