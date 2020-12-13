@@ -1,4 +1,4 @@
-import Video from "./components/video"
+import VideoPlayer from "./components/video"
 import './App.css';
 
 
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <img className="pattern" src="/images/pattern2.svg" />
       <header className="App-header">
-        <Video />
+        <VideoPlayer />
       </header>
     </div>
   );
