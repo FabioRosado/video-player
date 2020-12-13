@@ -14,7 +14,7 @@
     }
 }
 
-.video-controls {
+#video-controls {
     background-color: var(--dark-blue);
     margin-top: -10px;
     display: flex;

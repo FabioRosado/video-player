@@ -1,8 +1,5 @@
 
-const playOrPause = () => {
-
-    const player = document.getElementById("video-player")
-
+const playOrPause = (player) => {
     if (player.paused) {
         player.play()
     } else {
