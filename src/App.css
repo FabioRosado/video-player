@@ -6,7 +6,9 @@
   --gray: #404859;
 }
 
-
+html {
+  overflow: hidden;
+}
 
 .relative {
   position: relative;
@@ -53,7 +55,21 @@
 
 .pattern {
     position: absolute;
-    left: -22vw;
-    top: 20vh;
-    width: 600px;
+    left: -25vw;
+}
+
+#pattern-style {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1000;
+}
+
+@keyframes strokeOffset {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Apply the animation to each mask */
+#pattern-style{
+  animation: strokeOffset 1s linear forwards;
 }

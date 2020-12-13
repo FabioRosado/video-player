@@ -2,24 +2,25 @@ import React, { useEffect, useState, useRef } from "react"
 import "./video.css"
 import Icon from "../components/icons/wrapper"
 
-import { playOrPause, getSeconds, getMilliseconds } from "./player/logic"
+import { playOrPause, getSeconds } from "./player/logic"
 
 const VideoPlayer = () => {
-    const [icon, setIcon] = useState("play")
     const [loop, setLoop] = useState(false)
     const [duration, setDuration] = useState("00")
     const [played, setPlayed] = useState(0)
     const [counter, setCount] = useState(0)
+    const [isPlaying, setIsPlaying] = useState(false)
     
     const videoRef = useRef()
     const player = document.getElementById("video-player")
     
 
-    const playPause = () => {
-        const player = document.getElementById("video-player")
-
-        player.paused ? setIcon("paused") : setIcon("play")
-        playOrPause()
+    const videoIsPlaying = () => {
+        setIsPlaying(true)
+    }
+    
+    const videoIsPaused = () => {
+        setIsPlaying(false)
     }
     
     const toggleFullscreen = (player) => {
@@ -39,8 +40,6 @@ const VideoPlayer = () => {
         
     }
 
-    
-    
     const getCurrentTime = () => {
         setPlayed(videoRef.current.currentTime)
         incrementCounter()
@@ -49,7 +48,7 @@ const VideoPlayer = () => {
     useEffect(() => {
         const handleKeyPress = (event) => {
             if (event.key === "k") {
-                playPause(player)
+                playOrPause()
             }
             if (event.key === "l") {
                toggleLoop()
@@ -63,12 +62,16 @@ const VideoPlayer = () => {
             setDuration(videoRef.current.duration)
             window.addEventListener("keydown", handleKeyPress)
             player.addEventListener("timeupdate", getCurrentTime)
+            player.addEventListener("playing", videoIsPlaying)
+            player.addEventListener("pause", videoIsPaused)
         }
 
         return () => {
             if(player) {
-                player.removeEventListener("timeupdate", getCurrentTime)
                 window.removeEventListener("keydown", handleKeyPress)
+                player.removeEventListener("timeupdate", getCurrentTime)
+                player.removeEventListener('playing', videoIsPlaying)
+                player.removeEventListener("pause", videoIsPaused)
             }
         }
 
@@ -87,8 +90,8 @@ const VideoPlayer = () => {
             </video>
             <div className="video-controls">
                 <div className="left-side">
-                    <button className="player-button" aria-label="Play/Pause (shortcut k)" data-title="Play (k)" onClick={() => playPause()}>
-                        <Icon icon={icon === "play" ? "play" : "pause"} width={20} height={23} />
+                    <button className="player-button" aria-label="Play/Pause (shortcut k)" data-title="Play (k)" onClick={() => playOrPause()}>
+                        <Icon icon={isPlaying ? "pause" : "play"} width={20} height={23} />
                     </button>
 
                     <button className="player-button disabled-button" aria-label="Volume Button" disabled>

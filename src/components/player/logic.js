@@ -17,14 +17,9 @@ const getSeconds = (timeInSeconds) => {
     return result.substr(6, 2)
 
 }
-
-const getMilliseconds = (seconds) => {
-    return Math.round(seconds * 1000)
-}
     
 
 export {
     playOrPause,
     getSeconds,
-    getMilliseconds
 }
