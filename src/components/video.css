@@ -3,7 +3,12 @@
     position: relative;
 }
 
-@media(max-width: 1200px) {
+@media(max-width: 530px) {
+    #video-player {
+        width: 90vw;
+    }
+}
+@media(max-width: 1200px) and (min-width: 530px) {
     #video-player {
         width: 70vw;
     }
@@ -21,7 +26,6 @@
     background-color: var(--dark-blue);
     border-style: none;
     cursor: pointer;
-    margin-right: 1rem;
 }
 
 /* 
@@ -55,6 +59,33 @@
 
 #disabled-button {
     fill: var(--gray);
+}
+
+
+.center-controls {
+    display: flex;
+    align-items: center;
+}
+.progress-bar {
+  margin: 0 auto;
+  width: 20vw;
+  background-color: var(--gray);
+  position: relative;
+  height: 5px;
+  padding-right: 2px;
+}
+
+.progress {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 5px;
+  background-color: var(--green);
+}
+
+.time {
+    font-size: small;
+    margin-left: .5rem;
 }
 
 .image-1 {

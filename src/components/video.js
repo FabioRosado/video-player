@@ -15,7 +15,6 @@ const VideoPlayer = () => {
     const player = document.getElementById("video-player")
     
 
-
     const playPause = () => {
         const player = document.getElementById("video-player")
 
@@ -29,14 +28,22 @@ const VideoPlayer = () => {
         }
     }
 
+    const incrementCounter = () => {
+        if (getSeconds(videoRef.current.currentTime) > 9) {
+            setCount(counter + 1)
+        }        
+    }
+
+    const toggleLoop = () => {
+        setLoop(!loop)
+        
+    }
+
     
     
     const getCurrentTime = () => {
         setPlayed(videoRef.current.currentTime)
-
-        if (getSeconds(videoRef.current.currentTime) > 9) {
-            setCount(counter + 1)
-        }
+        incrementCounter()
     }
     
     useEffect(() => {
@@ -45,7 +52,7 @@ const VideoPlayer = () => {
                 playPause(player)
             }
             if (event.key === "l") {
-                setLoop(!loop)
+               toggleLoop()
             }
             if (event.key === "f") {
                 toggleFullscreen(player)
@@ -58,7 +65,6 @@ const VideoPlayer = () => {
             player.addEventListener("timeupdate", getCurrentTime)
         }
 
-
         return () => {
             if(player) {
                 player.removeEventListener("timeupdate", getCurrentTime)
@@ -67,14 +73,11 @@ const VideoPlayer = () => {
         }
 
     }, [videoRef, player, loop, counter])
-    
-    console.log(counter)
+
+
     return(
         <div className="relative">
-            {played > 3.5 && played < 8.5 && counter < 1 && 
-                <img className="image-1" src="/images/image1.png" alt="banana" />
-            }
-
+            {played > 3.5 && played < 8.5 && counter < 1 && <img className="image-1" src="/images/image1.png" alt="banana" />}
             {played > 6 && played < 8 && counter < 3 && <img className="image-2" src="/images/image2.png" alt="remote" /> }
             {played > 7 && played < 8.5 && counter < 4 && <img className="image-3" src="/images/image3.png" alt="fire" />}
 
@@ -93,7 +96,13 @@ const VideoPlayer = () => {
                     </button>
                 </div>
 
-                <div className="center">
+                <div className="center-controls">
+                    <div className="video-progress">
+                        <div className="progress-bar">
+                            <div className="progress"  style={{width: `${played * 10}%`}} />
+                        </div>
+                    </div>
+
                     <div className="time">
                         <time id="time-elapsed">{`00:${getSeconds(played)}`}</time>
                         <span> / </span>
@@ -102,9 +111,11 @@ const VideoPlayer = () => {
 
                 </div>
 
+                
+
 
                 <div className="right-side">
-                    <button className="player-button" aria-label="Toggle video loopback (shorcut l)" onClick={() => setLoop(!loop)}>
+                    <button className="player-button" aria-label="Toggle video loopback (shorcut l)" onClick={() => toggleLoop()}>
                         <Icon icon="loop" width={27} height={23} />
                     </button>
                     <button className="player-button" aria-label="Toggle fullscreen (shorcut f)" onClick={() => toggleFullscreen(player)}>
