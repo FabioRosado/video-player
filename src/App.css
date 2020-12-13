@@ -1,7 +1,7 @@
 :root {
   --light-blue: #349adc;
   --blue: #111b32;
-  --dark-blue: #0A0F1C;
+  --dark-blue: #0a0f1c;
   --green: #46beaf;
   --gray: #404859;
 }
@@ -54,8 +54,8 @@ html {
 }
 
 .pattern {
-    position: absolute;
-    left: -25vw;
+  position: absolute;
+  left: -25vw;
 }
 
 #pattern-style {
@@ -70,6 +70,6 @@ html {
 }
 
 /* Apply the animation to each mask */
-#pattern-style{
+#pattern-style {
   animation: strokeOffset 1s linear forwards;
 }

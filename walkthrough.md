@@ -1,6 +1,6 @@
 # Project Walkthrough
 
-This was an interesting project to work on, I haven't worked with video on my previous projects so I had to do things that I wasn't used to. I'm also used to use tools like `Nextjs`, `Gatsby` or any other library that could make the development of my projects easier. 
+This was an interesting project to work on, I haven't worked with video on my previous projects so I had to do things that I wasn't used to. I'm also used to use tools like `Nextjs`, `Gatsby` or any other library that could make the development of my projects easier.
 
 Working fully with React and creating everything from scratch has been a great learning experience.
 
@@ -37,19 +37,30 @@ Color Scheme:
 
 ## Player
 
-When it comes to having the player working, things went well. The only issue that I had initially was on how to make the player responsive. Initially, I was setting a fixed width in pixels. 
+When it comes to having the player working, things went well. The only issue that I had initially was on how to make the player responsive. Initially, I was setting a fixed width in pixels.
 
 After changing that to use the view width, the player can resize properly. I have also added a media query to the player, to make sure that on smaller screens, the video can be seen properly (without using fullscreen).
-
 
 ### Showing Images
 
 The way I went about to show the images at x time played isn't exactly pretty. I'm using a lot of conditionals to check if the played time is the right one to show the image. I'm also keeping track of the times the video has been played.
 
 ```js
-    {played > 3.5 && played < 8.5 && counter < 1 && <img className="image-1" src="/images/image1.png" alt="banana" />}
-    {played > 6 && played < 8 && counter < 3 && <img className="image-2" src="/images/image2.png" alt="remote" /> }
-    {played > 7 && played < 8.5 && counter < 4 && <img className="image-3" src="/images/image3.png" alt="fire" />}
+{
+  played > 3.5 && played < 8.5 && counter < 1 && (
+    <img className="image-1" src="/images/image1.png" alt="banana" />
+  );
+}
+{
+  played > 6 && played < 8 && counter < 3 && (
+    <img className="image-2" src="/images/image2.png" alt="remote" />
+  );
+}
+{
+  played > 7 && played < 8.5 && counter < 4 && (
+    <img className="image-3" src="/images/image3.png" alt="fire" />
+  );
+}
 ```
 
 Even though these aren't exactly pretty, it makes the images only to be loaded when all those other conditions are true.
@@ -60,7 +71,6 @@ It's also worth to point that I am using seconds instead of milliseconds. Since 
 
 To show the images, we need to get the currentTime from the video. Initially, I was using an event listener on `timeupdate` to get an update on the time. But then I realised that I can just use the `onTimeUpdate` attribute in the video tag.
 
-
 Then the `getCurrentTime` function does two things:
 
 - set the state for `played` time
@@ -68,13 +78,12 @@ Then the `getCurrentTime` function does two things:
 
 ```js
 const getCurrentTime = () => {
-    setPlayed(videoRef.current.currentTime)
-    incrementCounter()
-}
+  setPlayed(videoRef.current.currentTime);
+  incrementCounter();
+};
 ```
 
 Running increment counter inside this function isn't ideal, but since `incrementCounter` has an if statement that will increase the counter only when a condition is met, I decided to leave it as it is.
-
 
 ### Keeping track of the video plays
 
@@ -84,26 +93,25 @@ The issue here, is that if you make the video loop, the video will restart befor
 
 ```js
 const incrementCounter = () => {
-    if (Math.round(videoRef.current.currentTime, 2) > 9) {
-        if (loop) {
-            setCount(counter + .8)
-        } else {
-            setCount(counter + .5)
-        }
-    }        
-}
+  if (Math.round(videoRef.current.currentTime, 2) > 9) {
+    if (loop) {
+      setCount(counter + 0.8);
+    } else {
+      setCount(counter + 0.5);
+    }
+  }
+};
 ```
 
-Initially, I was using the helper function `getSeconds` to get exact seconds, but that wouldn't work when the loop is active. 
+Initially, I was using the helper function `getSeconds` to get exact seconds, but that wouldn't work when the loop is active.
 
-The way I found to handle both cases, was to add another if statement and then increment the counter to a decimal point. 
+The way I found to handle both cases, was to add another if statement and then increment the counter to a decimal point.
 
 The reason behind this is because when the `loop` functionality is active on the video, the loopback would happen at different times.
 
 This means that some times, the counter would be increased by 1 more than once on the same play.
 
 Using the decimal point seem to have fixed the issue. This feels quite hacky and I think there must be a better way to do this.
-
 
 ## Custom controls
 
@@ -112,18 +120,17 @@ These custom controls were the thing that gave me the hardest time. The one thin
 The reason behind this was I was using `getElementById` to get the video player. But by using refs and the right attributes on the video tag, everything is working as expected.
 
 ```js
-
-<video 
-	ref={player} 
-	id="video-player" 
-	loop={loop} 
-	onClick={() => playOrPause(player.current)} 
-	onTimeUpdate={() => getCurrentTime()}
-	onPause={() => videoIsPaused()}
-	onPlay={() => videoIsPlaying()}
+<video
+  ref={player}
+  id="video-player"
+  loop={loop}
+  onClick={() => playOrPause(player.current)}
+  onTimeUpdate={() => getCurrentTime()}
+  onPause={() => videoIsPaused()}
+  onPlay={() => videoIsPlaying()}
 >
-	<source src="/Big_Buck_Bunny_1080_10s_5MB.mp4" type="video/mp4"/>
-	Your browser does not support the video tag.
+  <source src="/Big_Buck_Bunny_1080_10s_5MB.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
 </video>
 ```
 
@@ -144,22 +151,21 @@ This was possibly the easiest button to create. I set a state (true/false) to th
 
 ```js
 const toggleLoop = () => {
-    setLoop(!loop)
-}
+  setLoop(!loop);
+};
 ```
 
 ### Fullscreen
 
-The `Element.requestFullscreen()` seems to be widely supported (globally 95%), I decided to just use that to toggle the fullscreen. 
+The `Element.requestFullscreen()` seems to be widely supported (globally 95%), I decided to just use that to toggle the fullscreen.
 
 ```js
 const toggleFullscreen = (player) => {
-	player.current.requestFullscreen()
-}
+  player.current.requestFullscreen();
+};
 ```
 
-
-### Play/Pause 
+### Play/Pause
 
 This was the first button I started working on and I struggled with it. Initially, I thought about making each button a component, but after working on the play/pause button, I've realised that it would be easier to keep them in the video component.
 
@@ -174,24 +180,27 @@ Initially, I was using a ternary to change the icon depending on the value of th
 After giving it some more thought, I have decided to approach this problem differently. So I decided that `isPlaying` should be a boolean flag. This allowed me to refactor the above code with:
 
 ```js
-<button className="player-button" title="Play/Pause (k)" aria-label="Play/Pause (shortcut k)" onClick={() => playOrPause(player.current)}>
-    <Icon icon={isPlaying ? "pause" : "play"} width={20} height={23} />
+<button
+  className="player-button"
+  title="Play/Pause (k)"
+  aria-label="Play/Pause (shortcut k)"
+  onClick={() => playOrPause(player.current)}
+>
+  <Icon icon={isPlaying ? "pause" : "play"} width={20} height={23} />
 </button>
 ```
 
-The `playOrPause` function is pretty straightforward, I've created this function because I had to use the same logic when dealing with the keyboard shortcuts. 
+The `playOrPause` function is pretty straightforward, I've created this function because I had to use the same logic when dealing with the keyboard shortcuts.
 
 ```js
 const playOrPause = (player) => {
-    if (player.paused) {
-        player.play()
-    } else {
-        player.pause()
-    }
-}
-
+  if (player.paused) {
+    player.play();
+  } else {
+    player.pause();
+  }
+};
 ```
-
 
 ### Progress bar
 
@@ -201,13 +210,13 @@ I also didn't want to use a `<progress>` tag, because I wanted the bar to look d
 
 ```js
 <div className="video-progress">
-    <div id="progress-bar">
-        <div className="progress"  style={{width: `${played * 10}%`}} />
-    </div>
+  <div id="progress-bar">
+    <div className="progress" style={{ width: `${played * 10}%` }} />
+  </div>
 </div>
 ```
 
-Another thing that I thought it could be good to add was the time played and the duration of the video. 
+Another thing that I thought it could be good to add was the time played and the duration of the video.
 
 I am setting the state of duration on the `videoIsPlaying` function. I had to make this decision after refactoring the whole VideoPlayer component. Setting the duration inside `useEffect` like I had before wouldn't give me undefined.
 
@@ -238,34 +247,38 @@ Initially, I had my `updateSeek` function like this:
 
 ```js
 const updateSeek = (event) => {
-    const progressBar = document.getElementById("progress-bar").offsetWidth
-    const player = document.getElementById("video-player")
+  const progressBar = document.getElementById("progress-bar").offsetWidth;
+  const player = document.getElementById("video-player");
 
-    const skipTo = Math.round((event.offsetX) * parseInt(progressBar, 10)/10000)
+  const skipTo = Math.round(
+    (event.offsetX * parseInt(progressBar, 10)) / 10000
+  );
 
-    player.currentTime = skipTo
-
-}
+  player.currentTime = skipTo;
+};
 ```
 
 Obviously, this is less than ideal. So I decided to add a ref to the progress bar div. By doing that it allows me to remove all of those `document.getElementById` and use the ref instead.
 
 ```js
 const updateSeek = (event) => {
-	const skipTo = Math.round((event.nativeEvent.offsetX) * parseInt(progressBarRef.current.offsetWidth, 10)/10000)
-	player.current.currentTime = skipTo
-}
+  const skipTo = Math.round(
+    (event.nativeEvent.offsetX *
+      parseInt(progressBarRef.current.offsetWidth, 10)) /
+      10000
+  );
+  player.current.currentTime = skipTo;
+};
 
 // ...
 <div className="video-progress">
-	<div id="progress-bar" ref={progressBarRef} onClick={(e) => updateSeek(e)}>
-		<div className="progress"  style={{width: `${played * 10}%`}} />
-	</div>
-</div>
+  <div id="progress-bar" ref={progressBarRef} onClick={(e) => updateSeek(e)}>
+    <div className="progress" style={{ width: `${played * 10}%` }} />
+  </div>
+</div>;
 ```
 
 I'd like to mention that the `skipTo` variable, was done by some trial and error. The results aren't exact, but seem to be working well enough.
-
 
 ### Volume
 
@@ -297,9 +310,10 @@ I hope I did a good job explaining my thought process, struggles and decisions t
 
 It was really fun working on this and use things that I haven't used before - like the video events for example.
 
-The `README` said that as an additional task, we should change the background when the user hovers and element. 
+The `README` said that as an additional task, we should change the background when the user hovers and element.
 
 Here I did two things:
+
 - change the icon's background when the user hovers the buttons.
 - Change the pattern colour when hovering the player
 

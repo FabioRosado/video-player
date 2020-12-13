@@ -1,31 +1,31 @@
 #video-player {
-    width: 50vw;
-    position: relative;
+  width: 50vw;
+  position: relative;
 }
 
-@media(max-width: 530px) {
-    #video-player {
-        width: 90vw;
-    }
+@media (max-width: 530px) {
+  #video-player {
+    width: 90vw;
+  }
 }
-@media(max-width: 1200px) and (min-width: 530px) {
-    #video-player {
-        width: 70vw;
-    }
+@media (max-width: 1200px) and (min-width: 530px) {
+  #video-player {
+    width: 70vw;
+  }
 }
 
 #video-controls {
-    background-color: var(--dark-blue);
-    margin-top: -10px;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
+  background-color: var(--dark-blue);
+  margin-top: -10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
 .player-button {
-    background-color: var(--dark-blue);
-    border-style: none;
-    cursor: pointer;
+  background-color: var(--dark-blue);
+  border-style: none;
+  cursor: pointer;
 }
 
 /* 
@@ -48,23 +48,21 @@
 } */
 
 .player-button:disabled {
-    cursor: default;
+  cursor: default;
 }
 
 .player-button:hover #control-icon {
-    fill: var(--light-blue);
-    transition: fill .2s ease-in-out;
+  fill: var(--light-blue);
+  transition: fill 0.2s ease-in-out;
 }
-
 
 #disabled-button {
-    fill: var(--gray);
+  fill: var(--gray);
 }
 
-
 .center-controls {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #progress-bar {
@@ -85,31 +83,31 @@
 }
 
 .time {
-    font-size: small;
-    margin-left: .5rem;
+  font-size: small;
+  margin-left: 0.5rem;
 }
 
 .image-1 {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 1;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
 }
 
 .image-2 {
-    position: absolute;
-    top: 0;
-    right: 5px;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 5px;
+  z-index: 1;
 }
 
 .image-3 {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    width: 100px;
-    z-index: 1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100px;
+  z-index: 1;
 }
